@@ -18,6 +18,17 @@ require "webmock/minitest"
 
 require "googleauth"
 
+# Proactively stub the gcloud CLI call for all future Minitest tests
+module Google
+  module Auth
+    module CredentialsLoader
+      def load_gcloud_project_id
+        "my-project-id"
+      end
+    end
+  end
+end
+
 ##
 # A simple in-memory implementation of TokenStore
 # for UserAuthorizer initialization when testing

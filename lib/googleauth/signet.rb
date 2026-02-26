@@ -210,10 +210,12 @@ module Signet
           digest = Digest::SHA256.hexdigest response_hash["id_token"]
           response_hash["id_token"] = "(sha256:#{digest})"
         end
-        Google::Logging::Message.from(
-          message: "Received auth token response: #{response_hash}",
-          "credentialsId" => object_id
-        )
+        logger&.debug do
+          Google::Logging::Message.from(
+            message: "Received auth token response: #{response_hash}",
+            "credentialsId" => object_id
+          )
+        end
       end
 
       def log_auth_error err

@@ -176,6 +176,7 @@ describe Signet::OAuth2::Client do
         response = mocked_responses.shift
         response == :raise ? raise(Signet::RemoteServerError) : response
       end
+      expect(@client).to receive(:sleep).exactly(2).times.with(kind_of(Numeric))
       expect(@client.fetch_access_token!).to eq("success")
     end
 
@@ -185,6 +186,7 @@ describe Signet::OAuth2::Client do
         response = mocked_responses.shift
         response == :raise ? raise(Signet::RemoteServerError) : response
       end
+      expect(@client).to receive(:sleep).exactly(5).times.with(kind_of(Numeric))
       expect { @client.fetch_access_token! }.to raise_error Signet::AuthorizationError
     end
 

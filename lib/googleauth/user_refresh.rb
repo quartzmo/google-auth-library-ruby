@@ -146,6 +146,8 @@ module Google
               principal: principal
             )
           end
+
+          resp.body
         end
       end
 
